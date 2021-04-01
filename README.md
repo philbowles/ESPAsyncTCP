@@ -1,32 +1,33 @@
-# ESPAsyncTCP 
+# ESPAsyncTCP
+
+## N.B. THIS IS A BUGFIX VERSION OF THE ORIGINAL
+
 [![Build Status](https://travis-ci.org/me-no-dev/ESPAsyncTCP.svg?branch=master)](https://travis-ci.org/me-no-dev/ESPAsyncTCP) ![](https://github.com/me-no-dev/ESPAsyncTCP/workflows/ESP%20Async%20TCP%20CI/badge.svg)
 
-### Async TCP Library for ESP8266 Arduino
+---
 
-For ESP32 look [HERE](https://github.com/me-no-dev/AsyncTCP)
+# Bugs fixed from the original:
 
-[![Join the chat at https://gitter.im/me-no-dev/ESPAsyncWebServer](https://badges.gitter.im/me-no-dev/ESPAsyncWebServer.svg)](https://gitter.im/me-no-dev/ESPAsyncWebServer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+1. Compilation error when setting `ASYNC_TCP_SSL_ENABLED 1` in [async_config](src/async_config.h)
+2. Failure to correctly ACK "overlapped" requests, leading to a) un-ACKed messages which "pile-up" in the output buffers, usually leading to a timeout error in any caller as it waits (in vain) for the output buffer to clear, which it never will if any message is sent before the previous is ACKed
 
-This is a fully asynchronous TCP library, aimed at enabling trouble-free, multi-connection network environment for Espressif's ESP8266 MCUs.
+## Libraries which require this version
 
-This library is the base for [ESPAsyncWebServer](https://github.com/me-no-dev/ESPAsyncWebServer)
+The author's other libraries which will either fail to compile or will misbehave badly and crash if using the unpatched original are:
 
-## AsyncClient and AsyncServer
-The base classes on which everything else is built. They expose all possible scenarios, but are really raw and require more skills to use.
+1. [ESPAsyncWebserver](https://github.com/philbowles/ESPAsyncWebserver) This is a pre-requisite for the following two libraries, and also is a patched and cut-down version of the original which again had/still has numerous serious flaws
+2. [PangolinMQTT](https://github.com/philbowles/PangolinMQTT)
+3. [H4Plugins](https://github.com/philbowles/h4plugins)
 
-## AsyncPrinter
-This class can be used to send data like any other ```Print``` interface (```Serial``` for example).
-The object then can be used outside of the Async callbacks (the loop) and receive asynchronously data using ```onData```. The object can be checked if the underlying ```AsyncClient```is connected, or hook to the ```onDisconnect``` callback.
+---
 
-## AsyncTCPbuffer
-This class is really similar to the ```AsyncPrinter```, but it differs in the fact that it can buffer some of the incoming data.
+## Find me daily in these FB groups
 
-## SyncClient
-It is exactly what it sounds like. This is a standard, blocking TCP Client, similar to the one included in ```ESP8266WiFi```
+* [Pangolin Support](https://www.facebook.com/groups/pangolinmqtt/)
+* [ESP8266 & ESP32 Microcontrollers](https://www.facebook.com/groups/2125820374390340/)
+* [ESP Developers](https://www.facebook.com/groups/ESP8266/)
+* [H4/Plugins support](https://www.facebook.com/groups/h4plugins)
 
-## Libraries and projects that use AsyncTCP
-- [ESP Async Web Server](https://github.com/me-no-dev/ESPAsyncWebServer)
-- [Async MQTT client](https://github.com/marvinroger/async-mqtt-client)
-- [arduinoWebSockets](https://github.com/Links2004/arduinoWebSockets)
-- [ESP8266 Smart Home](https://github.com/baruch/esp8266_smart_home)
-- [KBox Firmware](https://github.com/sarfata/kbox-firmware)
+I am always grateful for any $upport on [Patreon](https://www.patreon.com/esparto) :)
+
+(C) 2021 Phil Bowles
