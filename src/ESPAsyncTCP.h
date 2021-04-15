@@ -18,9 +18,7 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-
-#ifndef ASYNCTCP_H_
-#define ASYNCTCP_H_
+#pragma once
 
 #include <async_config.h>
 #include "IPAddress.h"
@@ -322,6 +320,3 @@ class AsyncServer {
     static err_t _s_recv(void *arg, struct tcp_pcb *tpcb, struct pbuf *pb, err_t err);
 #endif
 };
-
-
-#endif /* ASYNCTCP_H_ */

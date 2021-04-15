@@ -23,6 +23,7 @@
  * Original Code and Inspiration: Slavey Karadzhov
  */
 #include <async_config.h>
+
 #if ASYNC_TCP_SSL_ENABLED
 
 #include "lwip/opt.h"
@@ -350,6 +351,7 @@ int tcp_ssl_write(struct tcp_pcb *tcp, uint8_t *data, size_t len) {
  *      > 0 - the length of the clear text characters that were read
  */
 int tcp_ssl_read(struct tcp_pcb *tcp, struct pbuf *p) {
+  TCP_SSL_DEBUG("tcp_ssl_readtcp_ssl_readtcp_ssl_readtcp_ssl_readtcp_ssl_read\n");
   if(tcp == NULL) {
     return -1;
   }
@@ -370,14 +372,13 @@ int tcp_ssl_read(struct tcp_pcb *tcp, struct pbuf *p) {
     return ERR_TCP_SSL_INVALID_DATA;
   }
 
-  //TCP_SSL_DEBUG("READY TO READ SOME DATA\n");
-
   fd_data->tcp_pbuf = p;
   fd_data->pbuf_offset = 0;
 
   do {
     read_bytes = ssl_read(fd_data->ssl, &read_buf);
     //TCP_SSL_DEBUG("tcp_ssl_ssl_read: %d\n", read_bytes);
+    system_soft_wdt_feed();
     if(read_bytes < SSL_OK) {
       if(read_bytes != SSL_CLOSE_NOTIFY) {
         TCP_SSL_DEBUG("tcp_ssl_read: read error: %d\n", read_bytes);
@@ -387,6 +388,7 @@ int tcp_ssl_read(struct tcp_pcb *tcp, struct pbuf *p) {
     } else if(read_bytes > 0){
       if(fd_data->on_data){
         fd_data->on_data(fd_data->arg, tcp, read_buf, read_bytes);
+            system_soft_wdt_feed();
       }
       total_bytes+= read_bytes;
     } else {
@@ -396,6 +398,7 @@ int tcp_ssl_read(struct tcp_pcb *tcp, struct pbuf *p) {
           //TCP_SSL_DEBUG("tcp_ssl_read: handshake OK\n");
           if(fd_data->on_handshake)
             fd_data->on_handshake(fd_data->arg, fd_data->tcp, fd_data->ssl);
+            system_soft_wdt_feed();
         } else if(fd_data->handshake != SSL_NOT_OK){
           TCP_SSL_DEBUG("tcp_ssl_read: handshake error: %d\n", fd_data->handshake);
           if(fd_data->on_error)
@@ -404,6 +407,7 @@ int tcp_ssl_read(struct tcp_pcb *tcp, struct pbuf *p) {
         }
       }
     }
+    system_soft_wdt_feed();
   } while (p->tot_len - fd_data->pbuf_offset > 0);
 
   tcp_recved(tcp, p->tot_len);

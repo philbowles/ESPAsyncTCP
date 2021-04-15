@@ -81,7 +81,6 @@ extern "C"{
   #include "lwip/init.h"
 }
 #include <tcp_axtls.h>
-
 /*
   Async Client Error Return Tracker
 */
@@ -513,7 +512,6 @@ void AsyncClient::_close(){
 }
 
 void AsyncClient::_error(err_t err) {
-  ASYNC_TCP_DEBUG("_error[%u]:%s err: %s(%ld)\n", getConnectionId(), ((NULL == _pcb) ? " NULL == _pcb!," : ""), errorToString(err), err);
   if(_pcb){
 #if ASYNC_TCP_SSL_ENABLED
     if(_pcb_secure){
