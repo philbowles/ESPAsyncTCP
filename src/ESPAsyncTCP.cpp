@@ -993,7 +993,7 @@ void AsyncClient::ackPacket(struct pbuf * pb){
   tcp_recved(_pcb, pb->len);
   pbuf_free(pb);
 }
-
+/*
 const char * AsyncClient::errorToString(err_t error) {
   switch (error) {
     case ERR_OK:         return "No error, everything OK";
@@ -1036,7 +1036,7 @@ const char * AsyncClient::stateToString(){
     default: return "UNKNOWN";
   }
 }
-
+*/
 /*
   Async TCP Server
 */
