@@ -2,8 +2,6 @@
 
 ## N.B. THIS IS A BUGFIX VERSION OF THE ORIGINAL
 
-[![Build Status](https://travis-ci.org/me-no-dev/ESPAsyncTCP.svg?branch=master)](https://travis-ci.org/me-no-dev/ESPAsyncTCP) ![](https://github.com/me-no-dev/ESPAsyncTCP/workflows/ESP%20Async%20TCP%20CI/badge.svg)
-
 ---
 
 # Bugs fixed from the original:
