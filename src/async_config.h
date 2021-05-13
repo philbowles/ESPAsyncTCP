@@ -21,7 +21,7 @@
 // #define DEBUG_ESP_PORT Serial
 
 // #define DEBUG_ESP_ASYNC_TCP 1
-#define DEBUG_ESP_TCP_SSL 1
+#define DEBUG_ESP_TCP_SSL 0
 #include <DebugPrintMacros.h>
 
 #ifndef ASYNC_TCP_ASSERT
